@@ -289,7 +289,31 @@ class WGAN:
         self.model.save(join('./model', 'model.h5'))
         self.critic.save(join('./model', 'critic.h5'))
         self.generator.save(join('./model', 'generator.h5'))
+        self._save_params()
         pkl.dump(self, open(join('./model', "obj.pkl"), "wb"))
+
+    def _save_params(self):
+        with open(join('./model', 'params.pkl'), 'wb') as f:
+            pkl.dump([
+                self.input_dim,
+                self.critic_conv_filters,
+                self.critic_conv_kernel_size,
+                self.critic_conv_strides,
+                self.critic_batch_norm_momentum,
+                self.critic_activation,
+                self.critic_dropout_rate,
+                self.critic_learning_rate,
+                self.generator_initial_dense_layer_size,
+                self.generator_upsample,
+                self.generator_conv_filters,
+                self.generator_conv_kernel_size,
+                self.generator_conv_strides,
+                self.generator_batch_norm_momentum,
+                self.generator_activation,
+                self.generator_dropout_rate,
+                self.generator_learning_rate,
+                self.optimizer_str,
+                self.z_dim], f)
 
     def load_weights(self, filepath):
         self.model.load_weights(filepath)
